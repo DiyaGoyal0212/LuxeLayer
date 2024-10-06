@@ -12,7 +12,7 @@ const Bestseller = () => {
         setBestseller(best.slice(0,5));
     },[]);
   return (
-    <div className='my-10'>
+    <div className='my-10 '>
         <div className='text-center text-3xl py-8'>
             <Title text1={'Our '} text2={'Bestseller'} />
         </div>
