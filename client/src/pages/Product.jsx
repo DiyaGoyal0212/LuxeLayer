@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/frontend_assets/assets';
+import RelatedProduct from '../components/RelatedProduct';
 
 const Product = () => {
 
   const {productId} = useParams();
-  const {products,currency} = useContext(ShopContext);
+  const {products,currency,addTocart} = useContext(ShopContext);
 
   const [ productData, setProductData ] = React.useState(false);
   const [ image,setImage] = useState('');
@@ -73,7 +74,7 @@ const Product = () => {
             </div>
           </div>
 
-          <button className='bg-red-500 text-white px-8 py-3 text-sm active:bg-gray-100'>ADD TO CART</button>
+          <button onClick={()=> addTocart(productData._id,sizess)} className='bg-red-500 text-white px-8 py-3 text-sm active:bg-gray-100'>ADD TO CART</button>
           <hr className='mt-8 sm:w-4/5'></hr>
 
           <div className='text-sm text-gray-500 mt-5 flex flex-col gap-1'>
@@ -87,7 +88,75 @@ const Product = () => {
       </div>
 
 
-      {/*  */}
+      {/* desc and review */}
+      <div className='mt-20'>
+        <div className='flex'>
+          
+          <b className='border px-5 py-3 text-sm'>Reviews(122)</b>
+        </div>
+
+        <div className=''>
+          <div className='flex gap-5 flex-row sm:flex-col mt-5'>
+            <div className='flex flex-row sm:flex-col gap-3'>
+              
+              <p className='font-medium'>John Doe</p>
+            </div>
+            <div>
+              <div className='flex items-center gap-1'>
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_dull_icon} alt="" className="w-3 5" />
+              </div>
+              <p className='mt-5 text-gray-500'>Really Nice Product </p>
+
+              
+            </div>
+            <div className='flex flex-row sm:flex-col gap-3'>
+              
+              <p className='font-medium'>Diya Goyal</p>
+            </div>
+            <div>
+              <div className='flex items-center gap-1'>
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_dull_icon} alt="" className="w-3 5" />
+              </div>
+              <p className='mt-5 text-gray-500'>Really Nice Product. Fitting super as well as fabric. great for wearing</p>
+
+              
+            </div>
+            <div className='flex flex-row sm:flex-col gap-3'>
+              
+              <p className='font-medium'>Nite Roy</p>
+            </div>
+            <div>
+              <div className='flex items-center gap-1'>
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_icon} alt="" className="w-3 5" />
+                <img src={assets.star_dull_icon} alt="" className="w-3 5" />
+              </div>
+              <p className='mt-5 text-gray-500'>Really Nice Product  , liked it , 100% trustworthy</p>
+
+              
+            </div>
+           
+            <p className='font-semibold '>more<span><img src={assets.dropdown_icon} className='rotate-270  w-3'  alt=" " /></span></p>
+          </div> 
+
+        </div>
+
+      </div>
+
+      {/* related products */}
+
+      <RelatedProduct category={productData.category} subCategory={productData.subCategory} />
+
       
     </div>
   ) : <div className='opacity-0'></div>
