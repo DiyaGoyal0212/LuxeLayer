@@ -1,11 +1,21 @@
-import {v2 as cloudinary} from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
 
+const connectCloudinary = async () => {
+    try {
+        if (!process.env.CLOUDINARY_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_SECRET_KEY) {
+            throw new Error('Missing Cloudinary configuration in environment variables');
+        }
 
-const connectCloudinary = async() =>{
-    cloudinary.config({
-        clod_name: process.env.CLOUDINARY_NAME,
-        api_key:process.env.CLOUDINARY_API_KEY,
-        api_secret:process.env.CLOUDINARY_SECRET_KEY
-    })
-}
+        cloudinary.config({
+            cloud_name: process.env.CLOUDINARY_NAME,
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_SECRET_KEY,
+        });
+
+        console.log('Cloudinary connected successfully');
+    } catch (error) {
+        console.error('Error connecting to Cloudinary:', error.message);
+    }
+};
+
 export default connectCloudinary;

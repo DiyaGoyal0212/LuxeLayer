@@ -10,6 +10,8 @@ const addProduct = async(req,res) =>{
         const image4 = req.files.image4 && req.files.image4[0];
 
         const images = [image1,image2,image3,image4].filter((item) => item !== undefined); 
+        console.log("Uploaded files:", req.files);
+        console.log("files",images);
 
         let imagesUrl = await Promise.all(
             images.map(async (item) =>{
@@ -17,6 +19,7 @@ const addProduct = async(req,res) =>{
                 return result.secure_url;
             })
         )
+      
 
         const productData = {
             name,
@@ -30,6 +33,8 @@ const addProduct = async(req,res) =>{
             date: Date.now(),
            
         }
+
+        
 
         const product = new productModel(productData);
         await product.save();
@@ -46,14 +51,36 @@ const addProduct = async(req,res) =>{
 }
 
 const listProducts = async(req,res) =>{
+    try{
+        const products = await productModel.find({});
+        res.json({success : true, products});
+
+    }catch(err){
+
+        res.json({success : false, message : err.message});
+    }
     
 }
 
 const removeProduct = async(req,res) =>{
+    try {
+        await productModel.findByIdAndDelete(req.body.id)
+        res.json({success : true, message : "Product removed successfully"})
+    } catch (error) {
+        res.json({success : false, message : error.message})
+        
+    }
     
 }
 
 const singleProduct = async(req,res) =>{
+    try {
+        const {productId} = req.body;
+         const product = await productModel.findById(productId);
+        res.json({success : true, product});
+    } catch (error) {
+        res.json({success : false, message : error.message});
+    }
     
 }
 
