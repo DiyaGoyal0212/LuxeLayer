@@ -73,7 +73,7 @@ const sortProduct = (e) =>{
 
   useEffect(() =>{
     applyFilter();
-  },[Category,Type,search,shoeSearch]);
+  },[Category,Type,search,shoeSearch,products]);
 
   useEffect(() =>{
     sortProduct();
@@ -92,15 +92,15 @@ const sortProduct = (e) =>{
           <p className='mb-3 text-sm font-medium'>CATEGORIES</p>
           <div className='flex flex-col gap-2 text-sm font-light text-gray-700'>
             <p className='flex gap-2'>
-              <input className='w-3 ' type='checkbox' value={'Men'} onChange={toggleCategory}/>Men
+              <input className='w-3' id='input' type='checkbox' value={'Men'} onChange={toggleCategory}/>Men
               
             </p>
             <p className='flex gap-2'>
-              <input className='w-3 ' type='checkbox' value={'Women'} onChange={toggleCategory}/>Women
+              <input className='w-3' id='input' type='checkbox' value={'Women'} onChange={toggleCategory}/>Women
               
             </p>
             <p className='flex gap-2'>
-              <input className='w-3 ' type='checkbox' value={'Kids'} onChange={toggleCategory} />Kids
+              <input className='w-3' id='input' type='checkbox' value={'Kids'} onChange={toggleCategory} />Kids
               
             </p>
           </div>
@@ -112,15 +112,15 @@ const sortProduct = (e) =>{
           <p className='mb-3 text-sm font-medium'>TYPE</p>
           <div className='flex flex-col gap-2 text-sm font-light text-gray-700'>
             <p className='flex gap-2'>
-              <input className='w-3 ' type='checkbox' value={'Topwear'} onChange={toggleType}/>Topwear
+              <input className='w-3' id='input' type='checkbox' value={'Topwear'} onChange={toggleType}/>Topwear
               
             </p>
             <p className='flex gap-2'>
-              <input className='w-3 ' type='checkbox' value={'Bottomwear'} onChange={toggleType}/>Bottomwear
+              <input className='w-3' id='input' type='checkbox' value={'Bottomwear'} onChange={toggleType}/>Bottomwear
               
             </p>
             <p className='flex gap-2'>
-              <input className='w-3 ' type='checkbox' value={'Winterwear'} onChange={toggleType}/>Winterwear
+              <input className='w-3' id='input' type='checkbox' value={'Winterwear'} onChange={toggleType}/>Winterwear
               
             </p>
           </div>
@@ -137,10 +137,10 @@ const sortProduct = (e) =>{
           <Title text1={'ALL '} text2={'Collection'} />
 
           {/* product sort */}
-          <select onChange={(e) =>setSort(e.target.value)} className='border-2 border-gray-300 text-sm px-2'>
-            <option value="relavent">Sort by Relavent</option>
-            <option value="low-high">Low to High</option>
-            <option value="hgh-low">High to Low</option>
+          <select id='input' onChange={(e) =>setSort(e.target.value)} className='border-2 border-gray-300 text-sm px-2'>
+            <option id='input' value="relavent">Sort by Relavent</option>
+            <option id='input' value="low-high">Low to High</option>
+            <option id='input' value="hgh-low">High to Low</option>
           </select>
         </div>
 

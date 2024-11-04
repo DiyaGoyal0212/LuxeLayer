@@ -16,13 +16,13 @@ const PlaceOrder = () => {
           <h1 className='font-semibold text-center'>SHIPPING DETAILS</h1>
         </div>
         <div className='flex flex-col gap-4'>
-          <input className='border px-2 py-1' type='text' placeholder='Full Name'></input>
-          <input className='border px-2 py-1' type='text' placeholder='Phone Number'></input>
-          <input className='border px-2 py-1' type='text' placeholder='Email'></input>
-          <input className='border px-2 py-1' type='text' placeholder='Address'></input>
-          <input className='border px-2 py-1' type='text' placeholder='City'></input>
-          <input className='border px-2 py-1' type='text' placeholder='State'></input>
-          <input className='border px-2 py-1' type='text' placeholder='Zip Code'></input>
+          <input id='name' className='border px-2 py-1' type='text' placeholder='Full Name'></input>
+          <input id='number' className='border px-2 py-1' type='text' placeholder='Phone Number'></input>
+          <input id='email' className='border px-2 py-1' type='text' placeholder='Email'></input>
+          <input id='address' className='border px-2 py-1' type='text' placeholder='Address'></input>
+          <input id='city' className='border px-2 py-1' type='text' placeholder='City'></input>
+          <input id='state' className='border px-2 py-1' type='text' placeholder='State'></input>
+          <input id='code' className='border px-2 py-1' type='text' placeholder='Zip Code'></input>
         </div>
       </div>
 

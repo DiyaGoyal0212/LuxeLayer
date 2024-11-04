@@ -14,8 +14,8 @@ const Login = () => {
       <hr className='border-none h-[1.5px] w-8 bg-gray-800'></hr>
     </div>
     {current === 'Login' ? '' : <input  type='text' className='w-full px-3py-2 border border-gray-800' placeholder='Name' required/>}
-    <input  type='email' className='w-full px-3py-2 border border-gray-800' placeholder='Email' required/>
-    <input  type='password' className='w-full px-3py-2 border border-gray-800' placeholder='password' required/>
+    <input  id="email" type='email' className='w-full px-3py-2 border border-gray-800' placeholder='Email' required/>
+    <input id='pass' type='password' className='w-full px-3py-2 border border-gray-800' placeholder='password' required/>
     <div className='w-full flex justify-between text-sm mt-[-8px]'>
       
       {

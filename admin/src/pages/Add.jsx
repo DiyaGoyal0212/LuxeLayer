@@ -16,7 +16,7 @@ const Add = ({token}) => {
   const [subCategory,setSubCategory] = React.useState("Topwear");
   const [price,setPrice] = React.useState('');
   const [sizes,setSizes] = React.useState([]);
-  const [bestSeller,setBestSeller] = React.useState(false);
+  const [bestSeller, setBestSeller] = React.useState(true);
 
   const onSubmithandler = async (e) =>{
     e.preventDefault();
@@ -32,7 +32,7 @@ const Add = ({token}) => {
       formData.append('subCategory', subCategory);
       formData.append('price', price);
       formData.append('sizes', JSON.stringify(sizes));
-      formData.append('bestSeller', bestSeller);
+      formData.append('bestSeller', bestSeller ? 'true' : 'false');
 
       const response = await axios.post(backendUrl + "/api/product/add",formData,{headers:{token}});
       if(response.data.success){
@@ -60,6 +60,11 @@ const Add = ({token}) => {
     }
 
   }
+
+
+  const handleToggle = () => {
+    setBestSeller(prev => !prev);
+  };
   
   return (
     <form onSubmit={onSubmithandler} className='flex flex-col w-full items-start gap-3'>
@@ -142,7 +147,12 @@ const Add = ({token}) => {
 
 
       <div className='flex gap-2 mt-2'>
-        <input onChange={() => setBestSeller(prev => !prev)} checked={bestSeller} type="checkbox" id="bestseller" />
+      <input
+      type="checkbox"
+      onChange={handleToggle}
+      checked={bestSeller}
+      id="bestseller"
+    />
         <label className='cursor-pointer' htmlFor="bestseller">Add to bestseller</label>
       </div>
 

@@ -11,7 +11,7 @@ const LatestCollection = () => {
     const [latestProducts,setLatestProducts] = React.useState([]);
     useEffect(() =>{
         setLatestProducts(products.slice(0,10));
-    },[]);
+    },[products]);
   return (
     <div className='my-10 '>
         <div className='text-center py-8 text-3xl'>
