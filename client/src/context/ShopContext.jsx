@@ -18,29 +18,45 @@ const ShopContextProvider = (props) =>{
     const[cartItems,setCartItems] = useState({});
     const navigate = useNavigate();
     const [products,setProducts] = useState([]);
+    const [token,setToken] = useState('');
 
     
-     const addTocart = async (itemId,size) =>{
-        if(!size) {
+    const addTocart = async (itemId, size) => {
+        if (!size) {
             toast.error('Please select a size');
             return;
         }
+    
+        // Clone the current cart state
         let cartData = structuredClone(cartItems);
-        if(cartData[itemId]){
-            if(cartData[itemId][size]){
-                cartData[itemId][size] = cartData[itemId][size]+1;
-            }else{
-                cartData[itemId][size] = 1;
+    
+        // Add item to cartData (or update quantity)
+        if (cartData[itemId]) {
+            if (cartData[itemId][size]) {
+                cartData[itemId][size] += 1; // Increment quantity
+            } else {
+                cartData[itemId][size] = 1; // Add size with quantity 1
+            }
+        } else {
+            cartData[itemId] = { [size]: 1 }; // Add new item with size and quantity 1
+        }
+    
+        // Update the local cart state with new cart data
+        setCartItems(cartData);
+    
+        // If user is logged in and there's a token, update the cart on the backend
+        if (token) {
+            try {
+                // Send the updated cart data to the backend
+                await axios.post(backendUrl + "/api/cart/add", { itemId, size }, {
+                    headers: { token }
+                });
+            } catch (error) {
+                toast.error(error.message);
             }
         }
-        else{
-            cartData[itemId] = {};
-            cartData[itemId][size] = 1;
-        }
-        setCartItems(cartData);
-
-
-     }
+    };
+    
 
   const getCartcount = () =>{
         let count = 0;
@@ -64,6 +80,14 @@ const ShopContextProvider = (props) =>{
     let cartData = structuredClone(cartItems);
     cartData[itemId][size] = quantity;
     setCartItems(cartData);
+    if(token){
+        try {
+             await axios.post(backendUrl + "/api/cart/update",{itemId,size,quantity},{headers:{token}});
+        } catch (error) {
+            toast.error(error.message);
+            
+        }
+    }
 
   }
 
@@ -103,16 +127,41 @@ const ShopContextProvider = (props) =>{
     }
   }
 
+  const getUserCart = async(token) =>{
+    try {
+        const response = await axios.post(backendUrl + "/api/cart/get",{},{headers:{token}});
+        if(response.data.success){
+            setCartItems(response.data.cartData);
+        }
+        else{
+            toast.error(response.data.message);
+        }
+    } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+        
+    }
+
+  }
+
   useEffect(() =>{
     getProducts()
   },[]);
+
+    useEffect(() =>{
+        if(!token && localStorage.getItem('token')){
+            setToken(localStorage.getItem('token'))
+            getUserCart(localStorage.getItem('token'));
+        }
+    },[]);
 
   
     const value = {
         products, currency, delivery_fee,
         search,setSearch,shoeSearch,setShoeSearch,
-        cartItems,addTocart,
-        getCartcount,updateData,getCartamount,navigate,backendUrl
+        cartItems,addTocart,setCartItems,
+        getCartcount,updateData,getCartamount,navigate,backendUrl,
+        setToken,token
 
     }
     return (

@@ -5,7 +5,15 @@ import { ShopContext } from '../context/ShopContext';
 
 const Navbar = () => {
     const [visible,setVisible] = React.useState(false);
-    const {setShoeSearch,getCartcount}  = useContext(ShopContext);
+    const {setShoeSearch,getCartcount,setToken,token, navigate,setCartItems}  = useContext(ShopContext);
+
+    const logout= () =>{
+        navigate('/login');
+        localStorage.removeItem('token');
+        setToken('');
+        setCartItems({});
+        
+    }
 
   return (
     <div className="flex items-center justify-between py-2 font-medium">
@@ -32,21 +40,30 @@ const Navbar = () => {
         <div className='flex items-center gap-6'>
             <img onClick={() => setShoeSearch(true)} src={assets.search_icon} className='w-5 cursor-pointer' alt="" />
             <div className='group relative'>
-            <Link to='/login'> <img src={assets.profile_icon} className='w-5 cursor-pointer' alt="" /></Link>
+            <img onClick={() => token ? null : navigate('/login')} src={assets.profile_icon} className='w-5 cursor-pointer' alt="" />
+            
+
+                {token && 
                 <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4'>
-                    <div className='flex flex-col gap-2 p-4 bg-white text-gray-600 rounded-lg shadow-lg'>
-                        <p className='cursor-pointer hover:text-black'>My Profile</p>
-                        <p className='cursor-pointer hover:text-black'>Orders</p>
-                        <p className='cursor-pointer hover:text-black'>Logout</p>
-                    </div>
+                <div className='flex flex-col gap-2 p-4 bg-white text-gray-600 rounded-lg shadow-lg'>
+                    <p className='cursor-pointer hover:text-black'>My Profile</p>
+                    <p onClick={() => navigate('/orders')} className='cursor-pointer hover:text-black'>Orders</p>
+                    <p onClick={logout} className='cursor-pointer hover:text-black'>Logout</p>
                 </div>
             </div>
+                }
+            </div>
+           
+           
+            {(token || localStorage.getItem('token')) && (
+  <Link to='/cart' className='relative'>
+    <img src={assets.cart_icon} className='w-5 cursor-pointer' alt="" />
+    <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>
+      {getCartcount()}
+    </p>
+  </Link>
+)}
 
-            <Link to='/cart' className='relative'>
-            <img src={assets.cart_icon} className='w-5 cursor-pointer' alt="" />
-            <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>{getCartcount()}</p>
-
-            </Link>
             <img onClick={() => setVisible(true)} src={assets.menu_icon} className='w-5 cursor-pointer sm:hidden ' alt="" />
         </div>
         <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`}>
